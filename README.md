@@ -4,7 +4,7 @@
     </a>
 </p>
 
-<h1 align="center">PSScriptAnalyzer</h1>
+<h1 align="center">PowerShell Linter</h1>
 
 ## Overview
 
@@ -31,14 +31,14 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: PSScriptAnalyzer
+    name: PowerShell Linter
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the Repository
         uses: actions/checkout@v4
-      - name: Run PSScriptAnalyzer
-        run: bash <(curl -s https://raw.githubusercontent.com/lupaxa-cicd-toolbox/psscriptanalyzer/master/src/pipeline.sh)
+      - name: Run PowerShell Linter
+        run: bash <(curl -s https://raw.githubusercontent.com/lupaxa-cicd-toolbox/powershell-linter/master/src/pipeline.sh)
 ```
 
 ### Local
@@ -50,7 +50,7 @@ jobs:
 Or without cloning:
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/lupaxa-cicd-toolbox/psscriptanalyzer/master/src/pipeline.sh)
+bash <(curl -s https://raw.githubusercontent.com/lupaxa-cicd-toolbox/powershell-linter/master/src/pipeline.sh)
 ```
 
 ## Configuration Options
@@ -85,17 +85,17 @@ on: [push, pull_request]
 
 jobs:
   build:
-    name: PSScriptAnalyzer
+    name: PowerShell Linter
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout the Repository
         uses: actions/checkout@v4
-      - name: Run PSScriptAnalyzer
+      - name: Run PowerShell Linter
         env:
           REPORT_ONLY: true
           SHOW_ERRORS: true
-        run: bash <(curl -s https://raw.githubusercontent.com/lupaxa-cicd-toolbox/psscriptanalyzer/master/src/pipeline.sh)
+        run: bash <(curl -s https://raw.githubusercontent.com/lupaxa-cicd-toolbox/powershell-linter/master/src/pipeline.sh)
 ```
 
 ## Example Output

@@ -64,7 +64,7 @@ INSTALL_REQUIREMENTS_FROM_REPO=false  # pip tools only
 
 # Callers download only this file. Keep the helper inline so install, version,
 # and lint share one script. The pipeline appends each source path to lint.
-ANALYZE_PS1="$(mktemp "${TMPDIR:-/tmp}/psscriptanalyzer.XXXXXX")"
+ANALYZE_PS1="$(mktemp "${TMPDIR:-/tmp}/powershell-linter.XXXXXX")"
 # shellcheck disable=SC2064 # path is fixed at startup; expand it when the trap is set
 trap "rm -f $(printf '%q' "${ANALYZE_PS1}")" EXIT
 cat > "${ANALYZE_PS1}" <<'PS1'
