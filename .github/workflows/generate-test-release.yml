@@ -1,0 +1,46 @@
+name: Generate Test Release
+
+# Makefile mapping: make bump-*-rc → version X.Y.Z-rcN → tag vX.Y.Z-rcN
+# Creates a GitHub prerelease (not a draft).
+# -devN tags do not trigger this workflow (local / in-repo WIP only).
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+-rc[0-9]+'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  generate-release-notes:
+    name: Generate Release Notes
+    uses: the-lupaxa-project/workflows/.github/workflows/reusable-github-release-generator.yml@master
+    with:
+      draft: false
+      prerelease: true
+    secrets:
+      github-token: ${{ secrets.GITHUB_TOKEN }}
+
+  generate-workflow-summary:
+    name: Generate Workflow Summary
+    needs:
+      - generate-release-notes
+    if: always()
+    uses: the-lupaxa-project/workflows/.github/workflows/reusable-workflow-summary.yml@master
+
+  generate-workflow-notifications:
+    name: Generate Workflow Notifications
+    needs:
+      - generate-workflow-summary
+    if: always()
+    uses: the-lupaxa-project/workflows/.github/workflows/reusable-workflow-notifier.yml@master
+    with:
+      notify_on_results: "failure,timed_out"
+    secrets:
+      slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
